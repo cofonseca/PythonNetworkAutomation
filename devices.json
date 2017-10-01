@@ -1,0 +1,15 @@
+[
+    {
+        "ip_address": "10.100.1.1",
+        "device_type": "cisco_ios",
+        "username": "admin",
+        "password": "p@ssw0rd",
+        "secret": "s3cr3t"
+    },
+    {
+        "ip_address": "10.100.2.1",
+        "device_type": "fortinet",
+        "username": "admin",
+        "password": "p@ssw0rd"
+    }
+]
