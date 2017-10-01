@@ -1,44 +1,34 @@
 import napalm
 import json
 import time
-
-devices = json.load(open('devices.json'))
-
-#iosDevices = ['10.199.1.74','10.199.1.36','10.199.1.37','199.120.209.2','199.120.209.3']
-#fortiosDevices = ['10.199.1.41']
+import os
 
 dateTime = time.strftime("%m%d%y-%H%M%S")
+netDevices = json.load(open('devices.json'))
 
-for iosDevice in iosDevices:
-    driver = napalm.get_network_driver('ios')
-    device = driver(hostname=iosDevice, username='network', password='2GssHAxe$$', timeout=10, optional_args={'secret':'4enableAxe$$'})
+for netDevice in netDevices:
+    if netDevice['device_type'] == 'cisco_ios':
+        driver = napalm.get_network_driver('ios')
+        configStartPoint = 'startup'
+        device = driver(hostname=netDevice['ip_address'], username=netDevice['username'], password=netDevice['password'], timeout=10, optional_args={'secret': netDevice['secret']})
+    elif netDevice['device_type'] == 'fortinet':
+        driver = napalm.get_network_driver('fortios')
+        configStartPoint = 'running'
+        device = driver(hostname=netDevice['ip_address'], username=netDevice['username'], password=netDevice['password'], timeout=10)
+    else:
+        print('Unknown Device Type')
+    # Begin Connection
     try:
-        print('Connecting to ' + iosDevice)
+        print('Connecting to ' + netDevice['ip_address'])
         device.open()
         runningConfig = device.get_config()
         deviceName = device.get_facts()['hostname']
         device.close()
         print('Saving config: ' + deviceName)
-        file = open("c:/users/cfonseca/desktop/"+deviceName+"-"+dateTime+".txt", "w")
-        file.write(runningConfig['startup'])
+        file = open("c:/users/"+os.getenv('username')+"/desktop/"+deviceName+"-"+dateTime+".txt", "w")
+        file.write(runningConfig[configStartPoint])
         file.close()
     except:
-        print('Failed to connect to ' + iosDevice)
-
-for fortiosDevice in fortiosDevices:
-    driver = napalm.get_network_driver('fortios')
-    device = driver(hostname=fortiosDevice, username='admin', password='l0gm3!n2FortiG@t3', timeout=10)
-    try:
-        print('Connecting to ' + fortiosDevice)
-        device.open()
-        runningConfig = device.get_config()
-        deviceName = device.get_facts()['hostname']
-        device.close()
-        print('Saving config: ' + deviceName)
-        file = open("c:/users/cfonseca/desktop/"+deviceName+"-"+dateTime+".txt", "w")
-        file.write(runningConfig['running'])
-        file.close()
-    except:
-        print('Failed to connect to' + fortiosDevice)
+        print('Failed to connect to ' + netDevice['ip_address'])
 
 # https://napalm.readthedocs.io/en/latest/base.html
