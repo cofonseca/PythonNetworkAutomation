@@ -25,7 +25,7 @@ for netDevice in netDevices:
         deviceName = device.get_facts()['hostname']
         device.close()
         print('Saving config: ' + deviceName)
-        file = open("c:/users/"+os.getenv('username')+"/desktop/"+deviceName+"-"+dateTime+".txt", "w")
+        file = open("c:/users/"+os.getenv('username')+"/desktop/"+deviceName+"-"+netDevice['ip_address']+"-"+dateTime+".txt", "w")
         file.write(runningConfig[configStartPoint])
         file.close()
     except:
