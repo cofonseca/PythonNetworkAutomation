@@ -1,15 +1,25 @@
 [
     {
-        "ip_address": "10.100.1.1",
+        "ip": "10.100.1.1",
+        "port": 22,
         "device_type": "cisco_ios",
         "username": "admin",
         "password": "p@ssw0rd",
         "secret": "s3cr3t"
     },
     {
-        "ip_address": "10.100.2.1",
+        "ip": "10.100.2.1",
+        "port": 22,
         "device_type": "fortinet",
         "username": "admin",
         "password": "p@ssw0rd"
+    },
+    {
+        "ip": "10.100.3.1",
+        "port": 22,
+        "device_type": "cisco_asa",
+        "username": "admin",
+        "password": "p@ssw0rd",
+        "secret": "s3cr3t"
     }
 ]
