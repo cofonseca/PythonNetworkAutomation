@@ -15,15 +15,18 @@ for netDevice in netDevices:
     if netDevice['ip_address'] == ip_address:
         if netDevice['device_type'] == 'cisco_ios':
             driver = napalm.get_network_driver('ios')
-            device = driver(hostname=netDevice['ip_address'], username=netDevice['username'], password=netDevice['password'], timeout=10, optional_args={'secret': netDevice['secret']})
+            device = driver(hostname=netDevice['ip_address'], username=netDevice['username'], 
+                            password=netDevice['password'], timeout=10, 
+                            optional_args={'secret': netDevice['secret']})
         elif netDevice['device_type'] == 'fortinet':
             driver = napalm.get_network_driver('fortios')
-            device = driver(hostname=netDevice['ip_address'], username=netDevice['username'], password=netDevice['password'], timeout=10)
+            device = driver(hostname=netDevice['ip_address'], username=netDevice['username'], 
+                            password=netDevice['password'], timeout=10)
         else:
             print('Unknown Device Type')
         # Begin Connection
         try:
-            print('Connecting to ' + netDevice['ip_address'])
+            print('\nConnecting to ' + netDevice['ip_address'])
             device.open()
             print('Loading Configuration...')
             device.load_merge_candidate(configFile)
