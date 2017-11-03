@@ -1,7 +1,7 @@
-import napalm
-import json
 import time
 import os
+import json
+import napalm
 from netmiko import ConnectHandler
 
 dateTime = time.strftime("%m%d%y-%H%M%S")

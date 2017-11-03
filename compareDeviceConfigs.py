@@ -1,8 +1,8 @@
-import napalm
-import json
 import time
 import os
 import sys
+import json
+import napalm
 
 ip_address = sys.argv[1]
 configFile = sys.argv[2]
