@@ -15,12 +15,12 @@ for netDevice in netDevices:
     if netDevice['ip_address'] == ip_address:
         if netDevice['device_type'] == 'cisco_ios':
             driver = napalm.get_network_driver('ios')
-            device = driver(hostname=netDevice['ip_address'], username=netDevice['username'], 
-                            password=netDevice['password'], timeout=10, 
+            device = driver(hostname=netDevice['ip_address'], username=netDevice['username'],
+                            password=netDevice['password'], timeout=10,
                             optional_args={'secret': netDevice['secret']})
         elif netDevice['device_type'] == 'fortinet':
             driver = napalm.get_network_driver('fortios')
-            device = driver(hostname=netDevice['ip_address'], username=netDevice['username'], 
+            device = driver(hostname=netDevice['ip_address'], username=netDevice['username'],
                             password=netDevice['password'], timeout=10)
         else:
             print('Unknown Device Type')
