@@ -11,19 +11,21 @@ for netDevice in netDevices:
     if netDevice['device_type'] == 'cisco_ios':
         driver = napalm.get_network_driver('ios')
         configStartPoint = 'startup'
-        device = driver(hostname=netDevice['ip'], username=netDevice['username'], password=netDevice['password'], timeout=10, optional_args={'secret': netDevice['secret']})
+        device = driver(hostname=netDevice['ip'], username=netDevice['username'],
+                        password=netDevice['password'], timeout=10,
+                        optional_args={'secret': netDevice['secret']})
     elif netDevice['device_type'] == 'fortinet':
         driver = napalm.get_network_driver('fortios')
         configStartPoint = 'running'
-        device = driver(hostname=netDevice['ip'], username=netDevice['username'], password=netDevice['password'], timeout=10)
+        device = driver(hostname=netDevice['ip'], username=netDevice['username'],
+                        password=netDevice['password'], timeout=10)
     elif netDevice['device_type'] == 'cisco_asa':
         device = ConnectHandler(**netDevice)
     else:
         print('Unknown Device Type')
     # Begin Connection
     try:
-        print('')
-        print('Connecting to ' + netDevice['ip'] + '...')
+        print('\nConnecting to ' + netDevice['ip'] + '...')
         if netDevice['device_type'] == 'cisco_asa':
             runningConfig = device.send_command('sh run')
             deviceName = device.send_command('sh hostname').strip('\n')
