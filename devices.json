@@ -21,5 +21,12 @@
         "username": "admin",
         "password": "p@ssw0rd",
         "secret": "s3cr3t"
+    },
+    {
+        "ip": "10.100.4.1",
+        "port": 22,
+        "device_type": "hp_procurve",
+        "username": "admin",
+        "password": "p@ssw0rd"
     }
 ]

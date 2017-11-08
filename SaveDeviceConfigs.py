@@ -21,12 +21,14 @@ for netDevice in netDevices:
                         password=netDevice['password'], timeout=10)
     elif netDevice['device_type'] == 'cisco_asa':
         device = ConnectHandler(**netDevice)
+    elif netDevice['device_type'] == 'hp_procurve':
+        device = ConnectHandler(**netDevice)
     else:
         print('Unknown Device Type')
     # Begin Connection
     try:
         print('\nConnecting to ' + netDevice['ip'] + '...')
-        if netDevice['device_type'] == 'cisco_asa':
+        if netDevice['device_type'] == 'cisco_asa' or netDevice['device_type'] == 'hp_procurve':
             runningConfig = device.send_command('sh run')
             deviceName = device.send_command('sh hostname').strip('\n')
             device.disconnect()
